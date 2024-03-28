@@ -8,16 +8,20 @@ const Mouse = Matter.Mouse
 
 export function createProjectileFirer (x, y, engine) {
   const projectileFirer = Bodies.circle(300, 310, 10, { mass: 100, frictionAir: 1, isSensor: true })
+  projectileFirer.experienceParent = 'Destruction Simulator'
   Composite.add(engine.world, [projectileFirer])
 
   const projectileRotation = Bodies.circle(100, 110, 15, { mass: 100, frictionAir: 1, isSensor: true })
+  projectileRotation.experienceParent = 'Destruction Simulator'
   Composite.add(engine.world, [projectileRotation])
   const projectileRotationCenter = Bodies.circle(100, 100, 8, { mass: 100, frictionAir: 1, isSensor: true })
+  projectileRotationCenter.experienceParent = 'Destruction Simulator'
   Composite.add(engine.world, [projectileRotationCenter])
 
-  setInterval(() => {
+  return setInterval(() => {
     const projectile = Bodies.circle(projectileFirer.position.x, projectileFirer.position.y, 5, { mass: 10, frictionAir: 0, isSensor: true })
     projectile.lifetime = projectileLifetime
+    projectile.experienceParent = 'Destruction Simulator'
 
     const velocity = { x: projectileRotation.position.x - projectileRotationCenter.position.x, y: projectileRotation.position.y - projectileRotationCenter.position.y }
 
@@ -27,9 +31,9 @@ export function createProjectileFirer (x, y, engine) {
   }, 200)
 }
 
-export function addBasicMouseControl (render, engine) {
+export function addBasicMouseControl (canvas, engine) {
   // add mouse control
-  const mouse = Mouse.create(render.canvas)
+  const mouse = Mouse.create(canvas)
   const mouseConstraint = MouseConstraint.create(engine, {
     mouse,
     constraint: {
@@ -43,5 +47,4 @@ export function addBasicMouseControl (render, engine) {
   Composite.add(engine.world, mouseConstraint)
 
   // keep the mouse in sync with rendering
-  render.mouse = mouse
 }
