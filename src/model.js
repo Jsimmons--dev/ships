@@ -53,6 +53,7 @@ export function generateShipBody (shipCellModel, position) {
   })
   shipBody.gameType = 'ship'
   shipBody.model = shipCellModel
+  shipBody.experienceParent = 'Destruction Simulator'
 
   const parts = []
   let numLiveCells = 0
@@ -154,6 +155,7 @@ export function regenerateShip (oldShipBody, shipCellModel, engine) {
     })
     shipBody.gameType = 'ship'
     shipBody.model = newShipCellModel
+    shipBody.experienceParent = 'Destruction Simulator'
 
     const parts = []
     let numLiveCells = 0
@@ -185,4 +187,15 @@ export function regenerateShip (oldShipBody, shipCellModel, engine) {
     Composite.add(engine.world, shipBody)
   }
   Composite.remove(engine.world, oldShipBody)
+}
+
+export function addDestructionSimulatorInterface (engine) {
+  const destructionSimulatorButton = Bodies.rectangle(500, 33, 131, 66, { id: 'destructionSimulatorButton', isStatic: true, isSensor: true })
+  destructionSimulatorButton.experience = 'Destruction Simulator'
+  destructionSimulatorButton.gameType = 'interface-button-basic'
+  const shipBuilderButton = Bodies.rectangle(300, 33, 131, 66, { id: 'shipBuilderButton', isStatic: true, isSensor: true })
+  shipBuilderButton.experience = 'Ship Builder'
+  shipBuilderButton.gameType = 'interface-button-basic'
+  Composite.add(engine.world, [destructionSimulatorButton, shipBuilderButton])
+  return [destructionSimulatorButton, shipBuilderButton]
 }
