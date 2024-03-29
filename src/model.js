@@ -42,7 +42,7 @@ export function generateShipCellsFromAdjacencyGraph (width, height, adjacencyGra
   }
 }
 
-export function generateShipBody (shipCellModel, position) {
+export function generateShipBody (shipCellModel, position, experience) {
   const shipBody = Body.create({
     id: 'ship',
     label: 'ship',
@@ -53,7 +53,7 @@ export function generateShipBody (shipCellModel, position) {
   })
   shipBody.gameType = 'ship'
   shipBody.model = shipCellModel
-  shipBody.experienceParent = 'Destruction Simulator'
+  shipBody.experienceParent = experience
 
   const parts = []
   let numLiveCells = 0
@@ -144,7 +144,7 @@ export function regenerateShip (oldShipBody, shipCellModel, engine) {
   const velocity = oldShipBody.velocity
   const angularVelocity = oldShipBody.angularVelocity
 
-  for (const newShipCellModel of adjacencyGraphs.map(graph => generateShipCellsFromAdjacencyGraph(defaultShipSize, defaultShipSize, graph))) {
+  for (const newShipCellModel of adjacencyGraphs.map(graph => generateShipCellsFromAdjacencyGraph(engine.shipBlueprint.width, engine.shipBlueprint.height, graph))) {
     const shipBody = Body.create({
       id: 'ship',
       label: 'ship',

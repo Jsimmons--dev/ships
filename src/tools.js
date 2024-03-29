@@ -9,13 +9,16 @@ const Mouse = Matter.Mouse
 export function createProjectileFirer (x, y, engine) {
   const projectileFirer = Bodies.circle(300, 310, 10, { mass: 100, frictionAir: 1, isSensor: true })
   projectileFirer.experienceParent = 'Destruction Simulator'
+  projectileFirer.renderType = 'basic-circle'
   Composite.add(engine.world, [projectileFirer])
 
   const projectileRotation = Bodies.circle(100, 110, 15, { mass: 100, frictionAir: 1, isSensor: true })
   projectileRotation.experienceParent = 'Destruction Simulator'
+  projectileRotation.renderType = 'basic-circle'
   Composite.add(engine.world, [projectileRotation])
   const projectileRotationCenter = Bodies.circle(100, 100, 8, { mass: 100, frictionAir: 1, isSensor: true })
   projectileRotationCenter.experienceParent = 'Destruction Simulator'
+  projectileRotationCenter.renderType = 'basic-circle'
   Composite.add(engine.world, [projectileRotationCenter])
 
   return setInterval(() => {
